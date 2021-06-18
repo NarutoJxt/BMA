@@ -1,0 +1,43 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Layout from "@/Layout/index"
+Vue.use(VueRouter)
+const routes = [
+  {
+    path: '/',
+    name:"在线书城",
+    component: Layout,
+    redirect:"/dashboard",
+    icon:"el-icon-setting",
+    children:[
+      {
+        path:"/dashboard",
+        name:"dashboard",
+        component:() => import("@/views/book/index")
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    hidden:true,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/users/login')
+  },
+  {
+    path:"/register",
+    name:"register",
+    hidden:true,
+    component: () => import("../views/users/register")
+  }
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
